@@ -35,3 +35,16 @@ def run_sequential(patients):
 
     end = time.time()
     return end - start
+
+def run_parallel(patients, num_threads=4):
+    global discharge_counter
+    discharge_counter = 0
+
+    start = time.time()
+
+    with ThreadPoolExecutor(max_workers=num_threads) as executor:
+        executor.map(lambda p: process_discharge(p, use_lock=True), patients)
+
+    end = time.time()
+    return end - start
+
