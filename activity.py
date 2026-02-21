@@ -48,3 +48,18 @@ def run_parallel(patients, num_threads=4):
     end = time.time()
     return end - start
 
+if __name__ == "__main__":
+
+    patients = list(range(300))
+
+    print("Running Sequential Version...")
+    sequential_time = run_sequential(patients)
+    print("Sequential Time:", round(sequential_time, 4), "seconds")
+
+    print("\nRunning Parallel Version (4 threads)...")
+    parallel_time = run_parallel(patients, num_threads=4)
+    print("Parallel Time:", round(parallel_time, 4), "seconds")
+
+    speedup = sequential_time / parallel_time
+
+    print("\nSpeedup:", round(speedup, 4))
