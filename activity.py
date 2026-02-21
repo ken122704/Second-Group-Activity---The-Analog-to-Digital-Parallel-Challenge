@@ -8,21 +8,30 @@ lock = threading.Lock()
 def process_discharge(patient_id, use_lock=False):
     global discharge_counter
 
-    # Simulate work stages
-    time.sleep(0.01)  # Verify record
-    time.sleep(0.01)  # Billing validation
-    time.sleep(0.01)  # Insurance approval
+    time.sleep(0.01)  
+    time.sleep(0.01)  
+    time.sleep(0.01)  
 
     if use_lock:
-        # Critical section (Parallel safe)
         with lock:
             discharge_counter += 1
             discharge_id = discharge_counter
     else:
-        # Sequential version (no lock needed)
         discharge_counter += 1
         discharge_id = discharge_counter
 
-    time.sleep(0.01)  # Generate summary
+    time.sleep(0.01) 
 
     return discharge_id
+
+def run_sequential(patients):
+    global discharge_counter
+    discharge_counter = 0
+
+    start = time.time()
+
+    for p in patients:
+        process_discharge(p, use_lock=False)
+
+    end = time.time()
+    return end - start
